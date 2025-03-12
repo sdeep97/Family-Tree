@@ -1,4 +1,4 @@
-package src.FamilyTree;
+package FamilyTree;
 
 public class FamilyTreeMain {
 
@@ -28,7 +28,7 @@ public class FamilyTreeMain {
         person1.children.get(1).children.get(0).children.get(0).addChild(new Person("Scottie", "Thailand"));
 
         printFamily(person1);
-        int familyCount = countFamily(person1);
+        int familyCount = countFamily(person1) + 1;
         System.out.println("Total family members: " + familyCount);
 
     }
@@ -59,11 +59,21 @@ public class FamilyTreeMain {
     }
 
     public static int countFamily(Person ptemp) {
-        int num = 1;
+        int num = 0;
 
-        for (int i = 0; i < ptemp.children.size(); i++) {
-            num += countFamily(ptemp.children.get(i));
+
+            if(ptemp.children.isEmpty() ){
+                return 0;
+            }
+
+            else{
+
+                for (int i = 0; i < ptemp.children.size(); i++) {
+                num += 1 + countFamily(ptemp.children.get(i));
+                }
+
         }
+
 
         return num;
     }
