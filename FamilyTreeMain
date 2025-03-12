@@ -1,9 +1,9 @@
-package FamilyTree;
+package src.FamilyTree;
 
 public class FamilyTreeMain {
 
 
-    public static void run () {
+    public static void run() {
 
         //generation 0
         Person person1 = new Person("Bobbie", "Mexico");
@@ -28,20 +28,43 @@ public class FamilyTreeMain {
         person1.children.get(1).children.get(0).children.get(0).addChild(new Person("Scottie", "Thailand"));
 
         printFamily(person1);
+        int familyCount = countFamily(person1);
+        System.out.println("Total family members: " + familyCount);
+
     }
 
-    public static void printFamily(Person ptemp){
+    public static void printFamily(Person ptemp) {
 
-        for (int i = 0; i < 3; i++) {
+        System.out.println(ptemp.name + " (" + ptemp.country + ")");
 
-            System.out.println(ptemp.children.get(i));
+        for (int i = 0; i < ptemp.children.size(); i++) {
+            Person child = ptemp.children.get(i);
+            System.out.println("  " + child.name + " (" + child.country + ")");
+
+            for (int j = 0; j < child.children.size(); j++) {
+                Person grandchild = child.children.get(j);
+                System.out.println("    " + grandchild.name + " (" + grandchild.country + ")");
+
+                for (int k = 0; k < grandchild.children.size(); k++) {
+                    Person greatGrandchild = grandchild.children.get(k);
+                    System.out.println("      " + greatGrandchild.name + " (" + greatGrandchild.country + ")");
+
+                    for (int l = 0; l < greatGrandchild.children.size(); l++) {
+                        Person greatGreatGrandchild = greatGrandchild.children.get(l);
+                        System.out.println("        " + greatGreatGrandchild.name + " (" + greatGreatGrandchild.country + ")");
+                    }
+                }
+            }
         }
     }
 
-    public static int countFamily (Person ptemp){
-        int num = 0;
+    public static int countFamily(Person ptemp) {
+        int num = 1;
+
+        for (int i = 0; i < ptemp.children.size(); i++) {
+            num += countFamily(ptemp.children.get(i));
+        }
 
         return num;
     }
-
 }
